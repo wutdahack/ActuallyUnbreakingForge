@@ -16,4 +16,5 @@ public class ModEnchantments {
    public static final RegistryObject<Enchantment> UNBREAKING = ENCHANTMENTS.register("unbreaking", () -> new ActuallyUnbreakingEnchantment(Enchantment.Rarity.UNCOMMON, EnchantmentType.BREAKABLE, EquipmentSlotType.values() // this may be the fix to the armour problem
    ));
 
+
 }
