@@ -1,9 +1,10 @@
 {
-  "package": "wutdahack.actuallyunbreaking.mixin",
-  "refmap": "mixins.actuallyunbreaking.refmap.json",
-  "minVersion": "0.6",
   "compatibilityLevel": "JAVA_8",
+  "package": "wutdahack.actuallyunbreaking.mixin",
   "mixins": [
-    "EnchantmentDurabilityMixin"
-  ]
+    "EnchantmentDurabilityMixin",
+    "ItemStackMixin"
+  ],
+  "client": [],
+  "server": []
 }
