@@ -1,6 +1,7 @@
 package wutdahack.actuallyunbreaking.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentMending;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -30,6 +31,11 @@ public class ActuallyUnbreakingEnchantment extends Enchantment {
 
     public boolean canApply(ItemStack stack) {
         return stack.isItemStackDamageable() || super.canApply(stack);
+    }
+
+    // items can't have mending and unbreaking together
+    public boolean canApplyTogether(Enchantment ench) {
+        return !(ench instanceof EnchantmentMending) && super.canApplyTogether(ench);
     }
 
 }
