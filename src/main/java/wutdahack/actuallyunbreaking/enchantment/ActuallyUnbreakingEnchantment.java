@@ -1,6 +1,6 @@
 package wutdahack.actuallyunbreaking.enchantment;
 
-import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig1u.AutoConfig;
 import net.minecraft.enchantment.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;

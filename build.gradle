@@ -4,10 +4,13 @@ buildscript {
         maven { url = 'https://repo.spongepowered.org/maven' }
         jcenter()
         mavenCentral()
+        gradlePluginPortal()
+
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.4"
     }
 }
 
@@ -17,11 +20,12 @@ apply plugin: 'org.spongepowered.mixin'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: "com.github.johnrengelman.shadow"
 
 
-version = '1.16.5-0.6.0'
-group = 'wutdahack.actuallyunbreaking' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'actuallyunbreaking'
+version = project.mod_version
+group = project.mod_group // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = project.mod_archives_base_name
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -131,29 +135,50 @@ dependencies {
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-     compile "me.shedaniel.cloth:cloth-config-forge:4.11.26"
+     compile(fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}"))
+     compile "me.shedaniel:autoconfig1u-forge:${project.autoconfig_version}"
+     shadow("me.shedaniel:autoconfig1u-forge:${project.autoconfig_version}") {
+         transitive = false
+     }
 
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
-jar {
-    manifest {
-        attributes([
-            "Specification-Title": "examplemod",
-            "Specification-Vendor": "examplemodsareus",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"examplemodsareus",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConfigs": "actuallyunbreaking.mixins.json"
-        ])
+
+shadowJar {
+        relocate(
+                "me.shedaniel.autoconfig1u",
+                "${project.group}.shadowed.me.shedaniel.autoconfig1u"
+        )
+        setConfigurations([project.configurations.getByName("shadow")])
+        classifier = ""
+        appendix = ""
+    }
+
+reobf {
+    shadowJar {
+
     }
 }
 
+// Example for how to get properties into the manifest for reading by the runtime..
+    jar {
+        manifest {
+            attributes([
+                    "Specification-Title"     : "examplemod",
+                    "Specification-Vendor"    : "examplemodsareus",
+                    "Specification-Version"   : "1", // We are version 1 of ourselves
+                    "Implementation-Title"    : project.name,
+                    "Implementation-Version"  : "${version}",
+                    "Implementation-Vendor"   : "examplemodsareus",
+                    "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                    "MixinConfigs"            : "actuallyunbreaking.mixins.json"
+            ])
+        }
+    }
+
 // Example configuration to allow publishing using the maven-publish task
 // This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar') 
+    jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
 
@@ -167,5 +192,5 @@ publishing {
         maven {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
-    }
-}
+      }
+   }

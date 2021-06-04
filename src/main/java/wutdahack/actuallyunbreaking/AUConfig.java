@@ -1,9 +1,10 @@
 package wutdahack.actuallyunbreaking;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+
+import me.shedaniel.autoconfig1u.ConfigData;
+import me.shedaniel.autoconfig1u.annotation.Config;
+import me.shedaniel.autoconfig1u.annotation.ConfigEntry;
+import me.shedaniel.autoconfig1u.shadowed.blue.endless.jankson.Comment;
 
 @Config(name = "actuallyunbreaking")
 @Config.Gui.Background("minecraft:textures/block/dirt.png")
