@@ -1,6 +1,5 @@
 package wutdahack.actuallyunbreaking.enchantment;
 
-import me.shedaniel.autoconfig1u.AutoConfig;
 import net.minecraft.enchantment.*;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -12,7 +11,6 @@ import java.util.Random;
 
 public class ActuallyUnbreakingEnchantment extends Enchantment {
 
-    static AUConfig config = AutoConfig.getConfigHolder(AUConfig.class).getConfig();
 
     public ActuallyUnbreakingEnchantment(Rarity rarityIn, EnchantmentType typeIn, EquipmentSlotType[] slots) {
         super(rarityIn, typeIn, slots);
@@ -28,9 +26,9 @@ public class ActuallyUnbreakingEnchantment extends Enchantment {
 
     public int getMaxLevel() {
 
-        if (config.level3Only) {
+        if (AUConfig.CONFIG.level3Only.get()) {
             return 3;
-        } else if (!config.level3Only) {
+        } else if (!AUConfig.CONFIG.level3Only.get()) {
             return 1;
         }
         return 1;
@@ -49,14 +47,14 @@ public class ActuallyUnbreakingEnchantment extends Enchantment {
 
         int level = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.UNBREAKING.get(), stack);
 
-        if (config.level3Only) {
+        if (AUConfig.CONFIG.level3Only.get()) {
             if (level == 3) {
                 return true;
             } else if (level < 3) {
                 UnbreakingEnchantment.negateDamage(stack, level, random);
             }
 
-        }  else if (!config.level3Only && level > 0) {
+        }  else if (!AUConfig.CONFIG.level3Only.get() && level > 0) {
             return true;
         }
 

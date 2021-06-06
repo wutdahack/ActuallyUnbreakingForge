@@ -1,17 +1,24 @@
 package wutdahack.actuallyunbreaking;
 
+import net.minecraftforge.common.ForgeConfigSpec;
 
-import me.shedaniel.autoconfig1u.ConfigData;
-import me.shedaniel.autoconfig1u.annotation.Config;
-import me.shedaniel.autoconfig1u.annotation.ConfigEntry;
-import me.shedaniel.autoconfig1u.shadowed.blue.endless.jankson.Comment;
+public class AUConfig {
 
-@Config(name = "actuallyunbreaking")
-@Config.Gui.Background("minecraft:textures/block/dirt.png")
-public class AUConfig implements ConfigData {
+    public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
-    @ConfigEntry.Gui.RequiresRestart(value = false)
-    @Comment("only level 3 of unbreaking will set the tool\nto be unbreakable if this is true. default = false")
-    public boolean level3Only = false;
+    public static final AUConfig CONFIG = new AUConfig(BUILDER);
+
+    public final ForgeConfigSpec.BooleanValue level3Only;
+
+
+    public AUConfig(ForgeConfigSpec.Builder builder) {
+        builder.push("Actually Unbreaking Config");
+        level3Only = builder
+                     .comment("only level 3 of unbreaking will set the tool\nto be unbreakable if this is true. default = false")
+                     .define("level3Only", false);
+        builder.pop();
+    }
+
+    public static final ForgeConfigSpec spec = BUILDER.build();
 
 }
