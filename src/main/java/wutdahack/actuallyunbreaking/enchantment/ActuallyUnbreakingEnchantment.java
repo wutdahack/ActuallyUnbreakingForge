@@ -28,9 +28,9 @@ public class ActuallyUnbreakingEnchantment extends Enchantment {
 
     public int getMaxLevel() {
 
-        if (config.level3Only) {
+        if (config.maxLevelOnly) {
             return 3;
-        } else if (!config.level3Only) {
+        } else if (!config.maxLevelOnly) {
             return 1;
         }
         return 1;
@@ -45,18 +45,18 @@ public class ActuallyUnbreakingEnchantment extends Enchantment {
         return !(ench instanceof MendingEnchantment) && super.canApplyTogether(ench);
     }
 
-    public static boolean preventDamage(ItemStack stack, Random random) {
+    public static boolean preventDamage(ItemStack stack) {
 
         int level = EnchantmentHelper.getEnchantmentLevel(ModEnchantments.UNBREAKING.get(), stack);
 
-        if (config.level3Only) {
-            if (level == 3) {
-                return true;
-            } else if (level < 3) {
-                UnbreakingEnchantment.negateDamage(stack, level, random);
-            }
+        if (config.maxLevelOnly) {
 
-        }  else if (!config.level3Only && level > 0) {
+            if (level == ModEnchantments.UNBREAKING.get().getMaxLevel() || level == ModEnchantments.UNBREAKING.get().getMaxLevel() * 2) {
+                return true;
+            } else if (level < ModEnchantments.UNBREAKING.get().getMaxLevel()) {
+                return false;
+            }
+        }  else if (!config.maxLevelOnly && level > 0) {
             return true;
         }
 

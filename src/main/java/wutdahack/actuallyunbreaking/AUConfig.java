@@ -11,7 +11,7 @@ import me.shedaniel.autoconfig1u.shadowed.blue.endless.jankson.Comment;
 public class AUConfig implements ConfigData {
 
     @ConfigEntry.Gui.RequiresRestart(value = false)
-    @Comment("only level 3 of unbreaking will set the tool\nto be unbreakable if this is true. default = false")
-    public boolean level3Only = false;
+    @Comment("only the last level of unbreaking will set the tool\nto be unbreakable if this is true. default = false")
+    public boolean maxLevelOnly = false;
 
 }
