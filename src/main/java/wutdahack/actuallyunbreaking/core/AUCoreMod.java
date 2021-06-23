@@ -8,6 +8,7 @@ import java.util.Map;
 
 // this is here so i can use mixins.
 
+@IFMLLoadingPlugin.MCVersion(value = "1.12.2")
 public class AUCoreMod implements IFMLLoadingPlugin {
 
     public AUCoreMod() {

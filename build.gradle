@@ -1,8 +1,8 @@
+
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = "https://repo.spongepowered.org/maven" }
-        jcenter()
         mavenCentral()
     }
     dependencies {
@@ -54,7 +54,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compile('org.spongepowered:mixin:0.8.3-SNAPSHOT') {
+    compile('org.spongepowered:mixin:0.8.2') {
         exclude module: 'guava'
         exclude module: 'commons-io'
         exclude module: 'gson'
@@ -81,14 +81,14 @@ processResources {
 jar {
     from {
         configurations.compile
-                .filter { "mixin-0.8.3-SNAPSHOT.jar" == it.name }
+                .filter { "mixin-0.8.2.jar" == it.name }
                 .collect { it.isDirectory() ? it : zipTree(it) }
     } {
         exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
     }
 
     manifest {
-        attributes "FMLCorePlugin": mod_core_plugin
+        attributes "FMLCorePlugin": mod_core_plugin.replace('${mod_group}', mod_group)
         attributes "FMLCorePluginContainsFMLMod": "true"
         attributes "ForceLoadAsMod": "true"
         attributes "TweakClass": "org.spongepowered.asm.launch.MixinTweaker"
