@@ -54,7 +54,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compile('org.spongepowered:mixin:0.8.2') {
+    compile('org.spongepowered:mixin:0.8.3') {
         exclude module: 'guava'
         exclude module: 'commons-io'
         exclude module: 'gson'
@@ -81,7 +81,7 @@ processResources {
 jar {
     from {
         configurations.compile
-                .filter { "mixin-0.8.2.jar" == it.name }
+                .filter { "mixin-0.8.3.jar" == it.name }
                 .collect { it.isDirectory() ? it : zipTree(it) }
     } {
         exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"

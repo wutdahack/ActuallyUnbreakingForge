@@ -4,8 +4,6 @@
   "compatibilityLevel": "JAVA_8",
   "package": "wutdahack.actuallyunbreaking.mixin",
   "mixins": [
-    "ItemStackMixin"
-  ],
-  "client": [],
-  "server": []
+    "EnchantmentDurabilityMixin"
+  ]
 }

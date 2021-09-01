@@ -10,8 +10,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class AUConfig {
 
     @Config.Name("max level only")
-    @Config.Comment("only the last level of unbreaking will set the tool\nto be unbreakable if this is true.")
+    @Config.Comment("only the last level of unbreaking will set the tool\nto be unbreakable if this is true. default = false")
     public static boolean maxLevelOnly = false;
+
+    @Config.Name("is incompatible with mending")
+    @Config.Comment("unbreaking will be incompatible with mending\nif this is true. default = true")
+    public static boolean mendingIncompatibility = true;
 
     @Mod.EventBusSubscriber(modid = ActuallyUnbreaking.MOD_ID)
     private static class EventHandler {
