@@ -4,7 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "actuallyunbreaking.refmap.json",
   "mixins": [
-    "UnbreakingEnchantmentMixin"
+    "DigDurabilityEnchantmentMixin"
   ],
   "minVersion": "0.8"
 }
