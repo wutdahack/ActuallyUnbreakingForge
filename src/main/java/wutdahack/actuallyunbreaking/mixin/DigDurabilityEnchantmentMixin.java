@@ -34,8 +34,12 @@ public abstract class DigDurabilityEnchantmentMixin extends Enchantment {
 
     @Inject(method = "shouldIgnoreDurabilityDrop", at = @At(value = "HEAD"), cancellable = true)
     private static void makeUnbreakable(ItemStack pStack, int pLevel, RandomSource pRandom, CallbackInfoReturnable<Boolean> cir) {
-        if (AUConfig.instance.maxLevelOnly ? pLevel >= Enchantments.UNBREAKING.getMaxLevel() : pLevel > 0) {
+        if (AUConfig.instance.maxLevelOnly && pLevel >= Enchantments.UNBREAKING.getMaxLevel()) {
             pStack.setDamageValue(0); // removes damage bar
+            cir.setReturnValue(true);
+        }
+        else if (!AUConfig.instance.maxLevelOnly && pLevel > 0) {
+            pStack.setDamageValue(0);
             cir.setReturnValue(true);
         }
     }

@@ -16,7 +16,6 @@ public class ActuallyUnbreaking {
         AUConfig.instance = AutoConfig.register(AUConfig.class, JanksonConfigSerializer::new).get();
 
         // registering config gui
-        // TODO: gotta test if this works later
         ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
                 () -> new ConfigScreenHandler.ConfigScreenFactory(
                         (client, parent) -> AutoConfig.getConfigScreen(AUConfig.class, parent).get()

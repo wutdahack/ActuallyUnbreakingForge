@@ -4,6 +4,7 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 version = mod_version
@@ -125,6 +126,13 @@ repositories {
     // }
 }
 
+mixin {
+
+    add sourceSets.main, "actuallyunbreaking.refmap.json"
+    config "actuallyunbreaking.mixins.json"
+
+}
+
 dependencies {
     // Specify the version of Minecraft to use.
     // Any artifact can be supplied so long as it has a "userdev" classifier artifact and is a compatible patcher artifact.
@@ -139,6 +147,7 @@ dependencies {
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
     // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
     compileOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}")
+    runtimeOnly fg.deobf("me.shedaniel.cloth:cloth-config-forge:${project.cloth_config_version}")
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"
@@ -148,6 +157,8 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -156,13 +167,15 @@ dependencies {
 // See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
 tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [
-            // TODO: something here does not want to work
-            minecraft_version_range: minecraft_version_range, forge_version_range: forge_version_range,
-            loader_version_range: loader_version_range, mod_version: mod_version,
+            minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
+            forge_version: forge_version, forge_version_range: forge_version_range,
+            loader_version_range: loader_version_range,
+            mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
             mod_authors: mod_authors, mod_description: mod_description,
-            cloth_config_version_range: cloth_config_version_range
+            cloth_config_version_range: cloth_config_version_range,
     ]
     inputs.properties replaceProperties
+
 
     filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
         expand replaceProperties + [project: project]
@@ -179,7 +192,8 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Title'    : project.name,
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : mod_authors,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'MixinsConfig'            : 'actuallyunbreaking.mixins.json'
         ])
     }
 
