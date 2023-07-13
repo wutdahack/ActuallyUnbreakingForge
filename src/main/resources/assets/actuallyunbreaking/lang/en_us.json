@@ -1,5 +1,8 @@
 {
   "text.autoconfig.actuallyunbreaking.title": "Actually Unbreaking Config",
   "text.autoconfig.actuallyunbreaking.option.maxLevelOnly": "max level only",
-  "text.autoconfig.actuallyunbreaking.option.mendingIncompatibility": "is incompatible with mending"
+  "text.autoconfig.actuallyunbreaking.option.mendingIncompatibility": "is incompatible with mending",
+  "text.autoconfig.actuallyunbreaking.option.useUnbreakableAtLevel": "use the unbreakable at level number",
+  "text.autoconfig.actuallyunbreaking.option.unbreakableAtLevel": "unbreakable at level",
+  "text.autoconfig.actuallyunbreaking.option.useUnbreakableTag": "use the unbreakable tag"
 }

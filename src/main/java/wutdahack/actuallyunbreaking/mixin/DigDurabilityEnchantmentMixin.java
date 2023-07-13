@@ -26,21 +26,32 @@ public abstract class DigDurabilityEnchantmentMixin extends Enchantment {
     @Override
     protected boolean checkCompatibility(Enchantment pOther) {
         if (AUConfig.instance.mendingIncompatibility) {
-            return !(pOther instanceof MendingEnchantment) && super.checkCompatibility(pOther); // mending with unbreaking will be redundant
+            return !(pOther instanceof MendingEnchantment) && super.checkCompatibility(pOther); // mending with unbreaking is redundant
         } else {
             return super.checkCompatibility(pOther);
         }
     }
 
+    @Inject(method = "canEnchant", at = @At(value = "HEAD"), cancellable = true)
+    private void dontAcceptUnbreakableItems(ItemStack pStack, CallbackInfoReturnable<Boolean> cir) {
+        if (AUConfig.instance.useUnbreakableTag) {
+            cir.setReturnValue(pStack.getTag() != null && !pStack.getTag().getBoolean("Unbreakable")); // item can't have unbreaking if it has the unbreaking tag as that's also redundant
+        }
+    }
+
     @Inject(method = "shouldIgnoreDurabilityDrop", at = @At(value = "HEAD"), cancellable = true)
     private static void makeUnbreakable(ItemStack pStack, int pLevel, RandomSource pRandom, CallbackInfoReturnable<Boolean> cir) {
-        if (AUConfig.instance.maxLevelOnly && pLevel >= Enchantments.UNBREAKING.getMaxLevel()) {
-            pStack.setDamageValue(0); // removes damage bar
-            cir.setReturnValue(true);
-        }
-        else if (!AUConfig.instance.maxLevelOnly && pLevel > 0) {
-            pStack.setDamageValue(0);
-            cir.setReturnValue(true);
+        if (!AUConfig.instance.useUnbreakableTag) {
+            if (AUConfig.instance.useUnbreakableAtLevel && pLevel >= AUConfig.instance.unbreakableAtLevel) {
+                pStack.setDamageValue(0); // removes damage bar
+                cir.setReturnValue(true);
+            } else if (AUConfig.instance.maxLevelOnly && pLevel >= Enchantments.UNBREAKING.getMaxLevel()) {
+                pStack.setDamageValue(0);
+                cir.setReturnValue(true);
+            } else if (!(AUConfig.instance.maxLevelOnly || AUConfig.instance.useUnbreakableAtLevel) && pLevel > 0) {
+                pStack.setDamageValue(0);
+                cir.setReturnValue(true);
+            }
         }
     }
 
