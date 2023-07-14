@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import wutdahack.actuallyunbreaking.AUConfig;
+import wutdahack.actuallyunbreaking.config.AUConfig;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,15 +22,15 @@ public abstract class ItemStackMixin {
     @Inject(method = "hurt", at = @At(value = "HEAD"))
     private void makeUnbreakable(int pAmount, RandomSource pRandom, ServerPlayer pUser, CallbackInfoReturnable<Boolean> cir) {
 
-        if (AUConfig.instance.useUnbreakableTag) {
+        if (AUConfig.CONFIG.useUnbreakableTag.get()) {
 
             int unbreakingLevel = ((ItemStack)(Object)this).getEnchantmentLevel(Enchantments.UNBREAKING); // get unbreaking level
 
-            if (AUConfig.instance.useUnbreakableAtLevel) {
-                if (unbreakingLevel >= AUConfig.instance.unbreakableAtLevel) {
+            if (AUConfig.CONFIG.useUnbreakableAtLevel.get()) {
+                if (unbreakingLevel >= AUConfig.CONFIG.unbreakableAtLevel.get()) {
                     actuallyUnbreaking$addUnbreakableTag((ItemStack) (Object) this);
                 }
-            } else if (AUConfig.instance.maxLevelOnly) {
+            } else if (AUConfig.CONFIG.maxLevelOnly.get()) {
                 if (unbreakingLevel >= Enchantments.UNBREAKING.getMaxLevel()) {
                     actuallyUnbreaking$addUnbreakableTag((ItemStack) (Object) this);
                 }
@@ -38,6 +38,7 @@ public abstract class ItemStackMixin {
                 actuallyUnbreaking$addUnbreakableTag((ItemStack)(Object) this);
             }
         }
+
     }
 
     @Unique
@@ -62,6 +63,7 @@ public abstract class ItemStackMixin {
                 enchantmentMap,
                 item
         ); // use the enchantment map on the tool
+
     }
 
 }

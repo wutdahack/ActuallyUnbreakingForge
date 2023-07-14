@@ -1,10 +1,12 @@
 package wutdahack.actuallyunbreaking;
 
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import wutdahack.actuallyunbreaking.config.AUConfig;
+import wutdahack.actuallyunbreaking.config.AUConfigGUI;
 
 @Mod(ActuallyUnbreaking.MOD_ID)
 public class ActuallyUnbreaking {
@@ -12,14 +14,21 @@ public class ActuallyUnbreaking {
     public static final String MOD_ID = "actuallyunbreaking";
 
     public ActuallyUnbreaking() {
-        // registering config
-        AUConfig.instance = AutoConfig.register(AUConfig.class, JanksonConfigSerializer::new).get();
+
+        // registering config with forge config system so cloth config isn't needed
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AUConfig.SPEC, "actuallyunbreaking.toml");
 
         // registering config gui
-        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new ConfigScreenHandler.ConfigScreenFactory(
-                        (client, parent) -> AutoConfig.getConfigScreen(AUConfig.class, parent).get()
-                ));
+        if (ModList.get().isLoaded("cloth_config")) {
+
+            AUConfigGUI configGUI = new AUConfigGUI();
+
+            ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                    () -> new ConfigScreenHandler.ConfigScreenFactory(
+                            (client, parent) -> configGUI.getConfigScreen(parent, client.level != null)
+                    ));
+        }
+
     }
 
 
