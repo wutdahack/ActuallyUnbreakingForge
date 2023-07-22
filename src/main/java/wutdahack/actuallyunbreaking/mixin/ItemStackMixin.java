@@ -1,7 +1,6 @@
 package wutdahack.actuallyunbreaking.mixin;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -14,17 +13,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import wutdahack.actuallyunbreaking.config.AUConfig;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 
     @Inject(method = "hurt", at = @At(value = "HEAD"))
-    private void makeUnbreakable(int pAmount, RandomSource pRandom, ServerPlayer pUser, CallbackInfoReturnable<Boolean> cir) {
+    private void makeUnbreakable(int pAmount, Random pRandom, ServerPlayer pUser, CallbackInfoReturnable<Boolean> cir) {
 
         if (AUConfig.CONFIG.useUnbreakableTag.get()) {
 
-            int unbreakingLevel = ((ItemStack)(Object)this).getEnchantmentLevel(Enchantments.UNBREAKING); // get unbreaking level
+            int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, (ItemStack) (Object) this); // get unbreaking level
 
             if (AUConfig.CONFIG.useUnbreakableAtLevel.get()) {
                 if (unbreakingLevel >= AUConfig.CONFIG.unbreakableAtLevel.get()) {
@@ -44,7 +44,7 @@ public abstract class ItemStackMixin {
     @Unique
     private void actuallyUnbreaking$addUnbreakableTag(ItemStack item) {
 
-        int mendingLevel = ((ItemStack)(Object)this).getEnchantmentLevel(Enchantments.UNBREAKING); // get mending level
+        int mendingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, (ItemStack) (Object) this); // get mending level
 
         item.getOrCreateTag().putBoolean("Unbreakable", true); // add the unbreakable tag
         item.setDamageValue(0); // set item damage to 0 to remove the tool's durability bar

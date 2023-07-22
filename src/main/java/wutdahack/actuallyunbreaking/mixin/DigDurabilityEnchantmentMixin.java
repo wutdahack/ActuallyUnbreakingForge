@@ -1,6 +1,5 @@
 package wutdahack.actuallyunbreaking.mixin;
 
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
@@ -13,6 +12,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import wutdahack.actuallyunbreaking.config.AUConfig;
+
+import java.util.Random;
 
 @Mixin(DigDurabilityEnchantment.class)
 public abstract class DigDurabilityEnchantmentMixin extends Enchantment {
@@ -42,7 +43,7 @@ public abstract class DigDurabilityEnchantmentMixin extends Enchantment {
     }
 
     @Inject(method = "shouldIgnoreDurabilityDrop", at = @At(value = "HEAD"), cancellable = true)
-    private static void makeUnbreakable(ItemStack pStack, int pLevel, RandomSource pRandom, CallbackInfoReturnable<Boolean> cir) {
+    private static void makeUnbreakable(ItemStack pStack, int pLevel, Random pRand, CallbackInfoReturnable<Boolean> cir) {
 
         if (!AUConfig.CONFIG.useUnbreakableTag.get()) {
             if (AUConfig.CONFIG.useUnbreakableAtLevel.get() && pLevel >= AUConfig.CONFIG.unbreakableAtLevel.get()) {

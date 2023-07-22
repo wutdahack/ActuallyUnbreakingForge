@@ -1,6 +1,6 @@
 package wutdahack.actuallyunbreaking;
 
-import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.client.ConfigGuiHandler;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -23,8 +23,8 @@ public class ActuallyUnbreaking {
 
             AUConfigGUI configGUI = new AUConfigGUI();
 
-            ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                    () -> new ConfigScreenHandler.ConfigScreenFactory(
+            ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class,
+                    () -> new ConfigGuiHandler.ConfigGuiFactory(
                             (client, parent) -> configGUI.getConfigScreen(parent, client.level != null)
                     ));
         }
