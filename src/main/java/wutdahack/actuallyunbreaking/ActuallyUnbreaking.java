@@ -1,10 +1,10 @@
 package wutdahack.actuallyunbreaking;
 
-import net.minecraftforge.client.ConfigGuiHandler;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fmlclient.ConfigGuiHandler;
 import wutdahack.actuallyunbreaking.config.AUConfig;
 import wutdahack.actuallyunbreaking.config.AUConfigGUI;
 
