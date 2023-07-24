@@ -64,7 +64,7 @@ ordering="NONE"
 side="BOTH"
 
 [[dependencies.${mod_id}]]
-modId="cloth_config"
+modId="cloth-config"
 mandatory=false
 ordering="AFTER"
 versionRange="${cloth_config_version_range}"
