@@ -4,6 +4,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "actuallyunbreaking.refmap.json",
   "mixins": [
+    "ItemStackMixin",
+    "MendingEnchantmentMixin",
     "UnbreakingEnchantmentMixin"
   ],
   "minVersion": "0.8"
