@@ -1,5 +1,6 @@
 package wutdahack.actuallyunbreaking.mixin;
 
+import net.minecraft.init.Enchantments;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -24,7 +25,7 @@ public abstract class ItemStackMixin {
 
         if (AUConfig.CONFIG.useUnbreakableTag.get()) {
 
-            int unbreakingLevel = ((ItemStack)(Object)this).getEnchantmentLevel(Enchantments.UNBREAKING); // get unbreaking level
+            int unbreakingLevel = ((ItemStack)(Object)this).getEnchantmentLevel(Enchantments.UNBREAKING);
 
             if (AUConfig.CONFIG.useUnbreakableAtLevel.get()) {
                 if (unbreakingLevel >= AUConfig.CONFIG.unbreakableAtLevel.get()) {
@@ -44,7 +45,7 @@ public abstract class ItemStackMixin {
     @Unique
     private void actuallyUnbreaking$addUnbreakableTag(ItemStack item) {
 
-        int mendingLevel = ((ItemStack)(Object)this).getEnchantmentLevel(Enchantments.UNBREAKING); // get mending level
+        int mendingLevel = ((ItemStack)(Object)this).getEnchantmentLevel(Enchantments.MENDING);
 
         item.getOrCreateTag().putBoolean("Unbreakable", true); // add the unbreakable tag
         item.setDamageValue(0); // set item damage to 0 to remove the tool's durability bar
@@ -62,7 +63,7 @@ public abstract class ItemStackMixin {
         EnchantmentHelper.setEnchantments(
                 enchantmentMap,
                 item
-        ); // use the enchantment map on the tool
+        ); // apply enchantment map on the tool
 
     }
 
