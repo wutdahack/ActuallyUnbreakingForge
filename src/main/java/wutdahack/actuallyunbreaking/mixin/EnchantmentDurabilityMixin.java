@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import wutdahack.actuallyunbreaking.AUConfig;
+import wutdahack.actuallyunbreaking.config.AUConfig;
 
 import java.util.Random;
 
@@ -25,21 +25,40 @@ public abstract class EnchantmentDurabilityMixin extends Enchantment {
     // items can't have mending and unbreaking together if enabled in config
     @Override
     protected boolean canApplyTogether(Enchantment ench) {
+
         if (AUConfig.mendingIncompatibility) {
             return !(ench instanceof EnchantmentMending) && super.canApplyTogether(ench);
         } else {
             return super.canApplyTogether(ench);
         }
+
     }
 
-    // item won't take damage and the damage bar will
-    // be removed depending on the level of the unbreaking enchantment
+    @Inject(method = "canApply", at = @At(value = "HEAD"), cancellable = true)
+    private void dontAcceptUnbreakableItems(ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
+
+        if (AUConfig.useUnbreakableTag) {
+            cir.setReturnValue(stack.getTagCompound() != null && !stack.getTagCompound().getBoolean("Unbreakable")); // item can't have unbreaking if it has the unbreaking tag as that's also redundant
+        }
+
+    }
+
     @Inject(method = "negateDamage", at = @At(value = "HEAD"), cancellable = true)
     private static void makeUnbreakable(ItemStack item, int level, Random random, CallbackInfoReturnable<Boolean> cir) {
-        if (AUConfig.maxLevelOnly ? level >= Enchantments.UNBREAKING.getMaxLevel() : level > 0) {
-            item.setItemDamage(0);
-            cir.setReturnValue(true);
+
+        if (!AUConfig.useUnbreakableTag) {
+            if (AUConfig.useUnbreakableAtLevel && level >= AUConfig.unbreakableAtLevel) {
+                item.setItemDamage(0); // removes damage bar
+                cir.setReturnValue(true);
+            } else if (AUConfig.maxLevelOnly && level >= Enchantments.UNBREAKING.getMaxLevel()) {
+                item.setItemDamage(0);
+                cir.setReturnValue(true);
+            } else if (!(AUConfig.maxLevelOnly || AUConfig.useUnbreakableAtLevel) && level > 0) {
+                item.setItemDamage(0);
+                cir.setReturnValue(true);
+            }
         }
+
     }
 
 }

@@ -3,7 +3,10 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "package": "wutdahack.actuallyunbreaking.mixin",
+  "refmap": "refmap.actuallyunbreaking.json",
   "mixins": [
-    "EnchantmentDurabilityMixin"
+    "EnchantmentDurabilityMixin",
+    "EnchantmentMendingMixin",
+    "ItemStackMixin"
   ]
 }
