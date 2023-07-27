@@ -24,7 +24,7 @@ public abstract class ItemStackMixin {
 
         if (AUConfig.CONFIG.useUnbreakableTag.get()) {
 
-            int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, (ItemStack) (Object) this); // get unbreaking level
+            int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, (ItemStack) (Object) this);
 
             if (AUConfig.CONFIG.useUnbreakableAtLevel.get()) {
                 if (unbreakingLevel >= AUConfig.CONFIG.unbreakableAtLevel.get()) {
@@ -44,7 +44,7 @@ public abstract class ItemStackMixin {
     @Unique
     private void actuallyUnbreaking$addUnbreakableTag(ItemStack item) {
 
-        int mendingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, (ItemStack) (Object) this); // get mending level
+        int mendingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, (ItemStack) (Object) this);
 
         item.getOrCreateTag().putBoolean("Unbreakable", true); // add the unbreakable tag
         item.setDamageValue(0); // set item damage to 0 to remove the tool's durability bar
@@ -62,7 +62,7 @@ public abstract class ItemStackMixin {
         EnchantmentHelper.setEnchantments(
                 enchantmentMap,
                 item
-        ); // use the enchantment map on the tool
+        ); // apply enchantment map to the tool
 
     }
 
