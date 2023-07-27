@@ -22,12 +22,11 @@ public abstract class EnchantmentDurabilityMixin extends Enchantment {
         super(rarityIn, typeIn, slots);
     }
 
-    // items can't have mending and unbreaking together if enabled in config
     @Override
     protected boolean canApplyTogether(Enchantment ench) {
 
         if (AUConfig.mendingIncompatibility) {
-            return !(ench instanceof EnchantmentMending) && super.canApplyTogether(ench);
+            return !(ench instanceof EnchantmentMending) && super.canApplyTogether(ench); // mending with unbreaking is redundant
         } else {
             return super.canApplyTogether(ench);
         }

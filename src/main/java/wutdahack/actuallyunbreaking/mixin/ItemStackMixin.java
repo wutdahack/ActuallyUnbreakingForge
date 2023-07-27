@@ -45,7 +45,7 @@ public abstract class ItemStackMixin {
     @Unique
     private void actuallyUnbreaking$addUnbreakableTag(ItemStack item) {
 
-        int mendingLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, (ItemStack) (Object) this); // get mending level
+        int mendingLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.MENDING, (ItemStack) (Object) this);
 
         if (item.getTagCompound() == null) {
             item.setTagCompound(new NBTTagCompound());
