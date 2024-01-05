@@ -1,6 +1,5 @@
 package wutdahack.actuallyunbreaking.mixin;
 
-import net.minecraft.init.Enchantments;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
