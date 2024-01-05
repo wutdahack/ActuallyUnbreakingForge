@@ -7,6 +7,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fmlclient.ConfigGuiHandler;
 
 public class AUConfigGUI {
 
@@ -66,5 +68,13 @@ public class AUConfigGUI {
 
     }
 
+    public static void registerConfigGUI() {
+        AUConfigGUI configGUI = new AUConfigGUI();
+
+        ModLoadingContext.get().registerExtensionPoint(ConfigGuiHandler.ConfigGuiFactory.class,
+                () -> new ConfigGuiHandler.ConfigGuiFactory(
+                        (client, parent) -> configGUI.getConfigScreen(parent, client.level != null)
+                ));
+    }
 
 }
