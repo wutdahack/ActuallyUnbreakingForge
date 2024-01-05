@@ -6,6 +6,8 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.fml.ModLoadingContext;
 
 public class AUConfigGUI {
 
@@ -65,5 +67,14 @@ public class AUConfigGUI {
 
     }
 
+    public static void registerConfigGUI() {
+
+        AUConfigGUI configGUI = new AUConfigGUI();
+
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new ConfigScreenHandler.ConfigScreenFactory(
+                        (client, parent) -> configGUI.getConfigScreen(parent, client.level != null)
+                ));
+    }
 
 }
