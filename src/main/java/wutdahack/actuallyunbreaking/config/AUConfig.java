@@ -8,7 +8,7 @@ public class AUConfig {
 
     public static final AUConfig CONFIG = new AUConfig(BUILDER);
 
-    public static final ForgeConfigSpec SPEC =  BUILDER.build();
+    public static final ForgeConfigSpec SPEC = BUILDER.build();
 
     public final  ForgeConfigSpec.BooleanValue maxLevelOnly;
 

@@ -7,6 +7,8 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 
 public class AUConfigGUI {
 
@@ -64,6 +66,15 @@ public class AUConfigGUI {
 
         return builder.setTransparentBackground(isTransparent).build();
 
+    }
+
+    public static void registerConfigGUI() {
+        AUConfigGUI configGUI = new AUConfigGUI();
+
+        ModLoadingContext.get().registerExtensionPoint(
+                ExtensionPoint.CONFIGGUIFACTORY,
+                () -> (mc, screen) -> configGUI.getConfigScreen(screen, mc.level != null)
+        );
     }
 
 }
