@@ -48,6 +48,24 @@ public class AUConfigGUI {
 
         general.addEntry(
                 configEntryBuilder
+                        .startBooleanToggle(new TranslatableComponent("text.config.actuallyunbreaking.option.useOnlyUnbreakableAtLevel"), AUConfig.CONFIG.useOnlyUnbreakableAtLevel.get())
+                        .setDefaultValue(false)
+                        .setSaveConsumer(AUConfig.CONFIG.useOnlyUnbreakableAtLevel::set)
+                        .setTooltip(new TranslatableComponent("text.config.actuallyunbreaking.comment.useOnlyUnbreakableAtLevel"))
+                        .build()
+        );
+
+        general.addEntry(
+                configEntryBuilder
+                        .startIntField(new TranslatableComponent("text.config.actuallyunbreaking.option.onlyUnbreakableAtLevel"), AUConfig.CONFIG.onlyUnbreakableAtLevel.get())
+                        .setDefaultValue(3)
+                        .setSaveConsumer(AUConfig.CONFIG.onlyUnbreakableAtLevel::set)
+                        .setTooltip(new TranslatableComponent("text.config.actuallyunbreaking.comment.onlyUnbreakableAtLevel"))
+                        .build()
+        );
+
+        general.addEntry(
+                configEntryBuilder
                         .startBooleanToggle(new TranslatableComponent("text.config.actuallyunbreaking.option.mendingIncompatibility"), AUConfig.CONFIG.mendingIncompatibility.get())
                         .setDefaultValue(true)
                         .setSaveConsumer(AUConfig.CONFIG.mendingIncompatibility::set)
