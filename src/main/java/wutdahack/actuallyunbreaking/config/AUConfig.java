@@ -15,12 +15,20 @@ public class AUConfig {
     public static boolean maxLevelOnly = false;
 
     @Config.Name("use the unbreakable at level number")
-    @Config.Comment("if this is true, the tool will only be\nunbreakable at a specified level\n(overrides max level option).")
+    @Config.Comment("if this is true, the tool will only be\nunbreakable at a specified level\nand above that level. (overrides max level option).")
     public static boolean useUnbreakableAtLevel = false;
 
     @Config.Name("unbreakable at level")
-    @Config.Comment("if this is true, the tool will only be\nunbreakable at a specified level\n(overrides max level option).")
+    @Config.Comment("the specified level the tool will be unbreakable at. default = 3")
     public static int unbreakableAtLevel = 3;
+
+    @Config.Name("only make the tool unbreakable at one specified level")
+    @Config.Comment("if this is true, it makes the tool\nunbreakable only at a specified level.\n(overrides max level and unbreakable at options)")
+    public static boolean useOnlyUnbreakableAtLevel = false;
+
+    @Config.Name("the only level that makes the tool unbreakable")
+    @Config.Comment("the specified level the tool will be unbreakable at")
+    public static int onlyUnbreakableAtLevel = 3;
 
     @Config.Name("is incompatible with mending")
     @Config.Comment("unbreaking will be incompatible with mending\nif this is true.")
