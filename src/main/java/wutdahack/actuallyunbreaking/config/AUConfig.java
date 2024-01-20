@@ -16,6 +16,10 @@ public class AUConfig {
 
     public final ForgeConfigSpec.ConfigValue<Integer> unbreakableAtLevel; // can't use ForgeConfigSpec.IntValue or the value will have to be set into a range
 
+    public final ForgeConfigSpec.BooleanValue useOnlyUnbreakableAtLevel;
+
+    public final ForgeConfigSpec.ConfigValue<Integer> onlyUnbreakableAtLevel;
+
     public final ForgeConfigSpec.BooleanValue mendingIncompatibility;
 
     public final ForgeConfigSpec.BooleanValue useUnbreakableTag;
@@ -33,8 +37,16 @@ public class AUConfig {
                 .define("useUnbreakableAtLevel", false);
 
         unbreakableAtLevel = builder
-                .comment("if this is true, the tool will only be\nunbreakable at a specified level\n(overrides max level option). default = false")
+                .comment("the specified level the tool will be unbreakable at. default = 3")
                 .define("unbreakableAtLevel", 3);
+
+        useOnlyUnbreakableAtLevel = builder
+                .comment("if this is true, it makes the tool\nunbreakable only at a specified level.\n(overrides max level and unbreakable at options)")
+                .define("useOnlyUnbreakableAtLevel", false);
+
+        onlyUnbreakableAtLevel = builder
+                .comment("the specified level the tool will be unbreakable at. default = 3")
+                .define("onlyUnbreakableAtLevel", 3);
 
         mendingIncompatibility = builder
                 .comment("unbreaking will be incompatible with mending\nif this is true. default = true")

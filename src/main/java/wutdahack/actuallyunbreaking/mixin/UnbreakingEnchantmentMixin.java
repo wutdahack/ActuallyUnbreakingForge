@@ -46,8 +46,12 @@ public abstract class UnbreakingEnchantmentMixin extends Enchantment {
     private static void makeUnbreakable(ItemStack pStack, int pLevel, Random pRand, CallbackInfoReturnable<Boolean> cir) {
 
         if (!AUConfig.CONFIG.useUnbreakableTag.get()) {
-            if (AUConfig.CONFIG.useUnbreakableAtLevel.get() && pLevel >= AUConfig.CONFIG.unbreakableAtLevel.get()) {
+            if (AUConfig.CONFIG.useOnlyUnbreakableAtLevel.get() && pLevel == AUConfig.CONFIG.onlyUnbreakableAtLevel.get()) {
                 pStack.setDamageValue(0); // removes damage bar
+                cir.setReturnValue(true);
+            }
+            else if (AUConfig.CONFIG.useUnbreakableAtLevel.get() && pLevel >= AUConfig.CONFIG.unbreakableAtLevel.get()) {
+                pStack.setDamageValue(0);
                 cir.setReturnValue(true);
             } else if (AUConfig.CONFIG.maxLevelOnly.get() && pLevel >= Enchantments.UNBREAKING.getMaxLevel()) {
                 pStack.setDamageValue(0);

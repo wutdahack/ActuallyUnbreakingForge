@@ -26,7 +26,13 @@ public abstract class ItemStackMixin {
 
             int unbreakingLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, (ItemStack) (Object) this);
 
-            if (AUConfig.CONFIG.useUnbreakableAtLevel.get()) {
+
+            if (AUConfig.CONFIG.useOnlyUnbreakableAtLevel.get()) {
+                if (unbreakingLevel == AUConfig.CONFIG.onlyUnbreakableAtLevel.get()) {
+                    actuallyUnbreaking$addUnbreakableTag((ItemStack) (Object) this);
+                }
+            }
+            else if (AUConfig.CONFIG.useUnbreakableAtLevel.get()) {
                 if (unbreakingLevel >= AUConfig.CONFIG.unbreakableAtLevel.get()) {
                     actuallyUnbreaking$addUnbreakableTag((ItemStack) (Object) this);
                 }
