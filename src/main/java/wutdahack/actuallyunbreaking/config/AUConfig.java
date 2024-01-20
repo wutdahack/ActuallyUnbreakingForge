@@ -33,7 +33,7 @@ public class AUConfig {
                 .define("maxLevelOnly", false);
 
         useUnbreakableAtLevel = builder
-                .comment("if this is true, the tool will only be\nunbreakable at a specified level\n(overrides max level option). default = false")
+                .comment("if this is true, the tool will only be\nunbreakable at a specified level\nand above that level. (overrides max level option). default = false")
                 .define("useUnbreakableAtLevel", false);
 
         unbreakableAtLevel = builder
