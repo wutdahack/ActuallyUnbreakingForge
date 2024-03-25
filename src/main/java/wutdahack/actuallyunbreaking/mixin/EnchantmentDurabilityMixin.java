@@ -46,16 +46,25 @@ public abstract class EnchantmentDurabilityMixin extends Enchantment {
     private static void makeUnbreakable(ItemStack item, int level, Random random, CallbackInfoReturnable<Boolean> cir) {
 
         if (!AUConfig.useUnbreakableTag) {
-            if (AUConfig.useOnlyUnbreakableAtLevel && level == AUConfig.onlyUnbreakableAtLevel) {
-                item.setItemDamage(0); // removes damage bar
-                cir.setReturnValue(true);
-            } else if (AUConfig.useUnbreakableAtLevel && level >= AUConfig.unbreakableAtLevel) {
-                item.setItemDamage(0);
-                cir.setReturnValue(true);
-            } else if (AUConfig.maxLevelOnly && level >= Enchantments.UNBREAKING.getMaxLevel()) {
-                item.setItemDamage(0);
-                cir.setReturnValue(true);
-            } else if (!(AUConfig.maxLevelOnly || AUConfig.useUnbreakableAtLevel) && level > 0) {
+            if (AUConfig.useOnlyUnbreakableAtLevel) {
+                if (level == AUConfig.onlyUnbreakableAtLevel) {
+                    item.setItemDamage(0); // removes damage bar
+                    cir.setReturnValue(true);
+                }
+            }
+            else if (AUConfig.useUnbreakableAtLevel) {
+                if (level >= AUConfig.unbreakableAtLevel) {
+                    item.setItemDamage(0);
+                    cir.setReturnValue(true);
+                }
+            }
+            else if (AUConfig.maxLevelOnly) {
+                if (level >= Enchantments.UNBREAKING.getMaxLevel()) {
+                    item.setItemDamage(0);
+                    cir.setReturnValue(true);
+                }
+            }
+            else if (level > 0) {
                 item.setItemDamage(0);
                 cir.setReturnValue(true);
             }
